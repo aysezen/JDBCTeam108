@@ -49,18 +49,26 @@ public class JDBC02_Query01 {
 
         System.out.println("======================= ORNEK 2 ===========================");
 
-        String selectQuery3 = "SELECT id, isim FROM firmalar WHERE iletisim_isim LIKE '%li%' ORDER BY id";
+        String selectQuery3 = "SELECT isim, id FROM firmalar WHERE iletisim_isim LIKE '%li%' ORDER BY id";
 
         ResultSet data2 = st.executeQuery(selectQuery3);
 
+        // while(data2.next()){
+        //     System.out.println(data2.getInt("id") + " " +
+        //             data2.getString("isim"));
+        // }
+
         while(data2.next()){
-            System.out.println(data2.getInt("id") + " " +
-                    data2.getString("isim"));
+            System.out.println(data2.getString(1) + " " +
+                    data2.getString(2));
         }
 
+        // NOT1 : Sorgulama icin get ile istenirse sütun (field) ismini yazabilecegimiz gibi sutun index
+        // (field olusturulma sirasina gore) yazilabilir.
+
+        // NOT2 : Sorgumuzda SELECT'ten sonra sadece belli fieldlari dondurmesini istiyorsak
+        // get ile cagirdigimiz field indexleri sorguda belirttigimiz sirayla ifade etmemiz gerekiyor
     }
-
-
 
 }
 
