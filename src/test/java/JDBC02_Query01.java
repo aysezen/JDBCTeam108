@@ -68,6 +68,11 @@ public class JDBC02_Query01 {
 
         // NOT2 : Sorgumuzda SELECT'ten sonra sadece belli fieldlari dondurmesini istiyorsak
         // get ile cagirdigimiz field indexleri sorguda belirttigimiz sirayla ifade etmemiz gerekiyor
+
+        con.close();
+        st.close();
+        data.close();
+        data2.close();
     }
 
 }
