@@ -65,7 +65,6 @@ public class JDBC02_Query01 {
 }
 
 
-        git commit -m "first commit"
-        git branch -M main
-        git remote add origin https://github.com/aysezen/JDBCTeam108.git
-        git push -u origin main
+
+
+
