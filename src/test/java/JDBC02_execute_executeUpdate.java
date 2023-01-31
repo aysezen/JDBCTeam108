@@ -68,6 +68,7 @@ public class JDBC02_execute_executeUpdate {
             INSERT INTO isciler VALUES(60, 'LAB', 3000)
             INSERT INTO isciler VALUES(50, 'ARGE', 4000)
 	     ========================================================================*/
+        System.out.println("=============== 1. Yontem ==============");
 
         String [] queries = {"INSERT INTO isciler VALUES(70, 'HR', 5000)",
                              "INSERT INTO isciler VALUES(60, 'LAB', 3000)",
@@ -78,6 +79,31 @@ public class JDBC02_execute_executeUpdate {
            count += st.executeUpdate(each);
         }
         System.out.println(count + " satir eklendi!");
+
+        // Ayri ayri sorgular ile veritabanina tekrar tekrar ulasmak islemlerin
+        // yavas yapilmasina yol acar. 10000 tane veri kaydi yapildigi dusunuldugunde
+        // bu kotu bir yaklasimdir.
+
+        System.out.println("=============== 2. Yontem ==============");
+
+        // 2.YONTEM (addBatch ve executeBatch() metotlari ile)
+        // ----------------------------------------------------
+        // addBatch metodu ile SQL ifadeleri gruplandirilabilir ve executeBatch()
+        // metodu ile veritabanina bir kere gonderilebilir.
+        // executeBatch() metodu bir int [] dizi dondurur. Bu dizi her bir ifade sonucunda
+        // etkilenen satir sayisini gosterir.
+
+        String [] queries2 = {"INSERT INTO isciler VALUES(10, 'TEKNIK', 3000)",
+                              "INSERT INTO isciler VALUES(20, 'KANTIN', 2000)",
+                              "INSERT INTO isciler VALUES(30, 'ARGE', 5000)"};
+
+        for (String each : queries2) { // Bu dongude her bir SQL komutunu torbaya atiyor
+            st.addBatch(each);
+        }
+
+        st.executeBatch(); // Burada da tek seferde tum torbayi goturup Database'e isliyor
+
+        System.out.println("Satirlar eklendi");
 
         /*=======================================================================
 	      ORNEK5: isciler tablosuna goruntuleyin.
@@ -93,6 +119,31 @@ public class JDBC02_execute_executeUpdate {
             System.out.println(iscilerTablosu.getInt(1) + " " +
                                 iscilerTablosu.getString(2) + " " +
                                 iscilerTablosu.getInt(3));
+        }
+
+        /*=======================================================================
+		  ORNEK6: isciler tablosundaki maasi 5000'den az olan iscilerin maasina
+		   %10 zam yapiniz.
+		========================================================================*/
+
+        String updateQuery = "UPDATE isciler SET maas=maas*1.1 WHERE maas<5000";
+
+        int satir = st.executeUpdate(updateQuery);
+
+        System.out.println(satir + " satir guncellendi!");
+
+        /*=======================================================================
+	      ORNEK7: isciler tablosunun son halini goruntuleyin.
+	     ========================================================================*/
+
+        System.out.println("================ Isciler Tablosu Maas Zamlari ================");
+
+        ResultSet iscilerTablosu2 = st.executeQuery(selectQuery);
+
+        while(iscilerTablosu2.next()){
+            System.out.println(iscilerTablosu2.getInt(1) + " " +
+                    iscilerTablosu2.getString(2) + " " +
+                    iscilerTablosu2.getInt(3));
         }
 
     }
