@@ -146,6 +146,35 @@ public class JDBC02_execute_executeUpdate {
                     iscilerTablosu2.getInt(3));
         }
 
-    }
+        /*=======================================================================
+	      ORNEK8: Isciler tablosundan birimi 'ARGE' olan iscileri siliniz.
+	     ========================================================================*/
 
+        String deleteQuery = "DELETE FROM isciler WHERE birim='ARGE'";
+
+        int silinenSatirSayisi = st.executeUpdate(deleteQuery);
+
+        System.out.println(silinenSatirSayisi + " satir silindi!");
+
+        /*=======================================================================
+	      ORNEK9: isciler tablosunun son halini goruntuleyin.
+	     ========================================================================*/
+
+        System.out.println("================ Isciler Tablosu Son Durum ================");
+
+        ResultSet iscilerTablosu3 = st.executeQuery(selectQuery);
+
+        while(iscilerTablosu3.next()){
+            System.out.println(iscilerTablosu3.getInt(1) + " " +
+                    iscilerTablosu3.getString(2) + " " +
+                    iscilerTablosu3.getInt(3));
+        }
+
+        con.close();
+        st.close();
+        iscilerTablosu.close();
+        iscilerTablosu2.close();
+        iscilerTablosu3.close();
+
+    }
 }
